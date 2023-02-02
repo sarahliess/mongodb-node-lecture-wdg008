@@ -2,6 +2,7 @@ require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const usersRouter = require("./routes/users");
+const studentsRouter = require("./routes/students");
 const db = require("./db/db");
 
 const app = express();
@@ -15,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 //Router Implementierung
-app.use("/", usersRouter);
+app.use("/", usersRouter, studentsRouter);
 
 app.get("/", async (req, res) => {
   res.send(`<h1>MongoDB + Node Lecture</h1>`);
