@@ -22,9 +22,20 @@ const getSingleStudent = async (req, res) => {
 };
 
 const createStudent = async (req, res) => {
-  const { name, first_name, email } = req.body;
+  //BEISPIEL:
+  //    {
+  //   "title": "Test 2",
+  //   "student": "63dbbf66d07cb418648617be" // ObjectId von Cookie Doe
+  // }
+
+  const { name, first_name, email, articles } = req.body;
   try {
-    const newStudent = await Student.create({ name, first_name, email });
+    const newStudent = await Student.create({
+      name,
+      first_name,
+      email,
+      articles,
+    });
     res
       .status(201)
       .send(`New student ${newStudent.first_name} has been created`);
@@ -63,10 +74,22 @@ const deleteStudent = async (req, res) => {
   }
 };
 
+const getAllArticlesOfStudent = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const studentArticles = await Student.findById(id).populate("articles");
+    res.status(200).json(studentArticles);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err.message);
+  }
+};
+
 module.exports = {
   getAllStudents,
   getSingleStudent,
   createStudent,
   updateStudent,
   deleteStudent,
+  getAllArticlesOfStudent,
 };

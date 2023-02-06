@@ -15,6 +15,13 @@ const Student = new Schema({
     type: String,
     required: true,
   },
+  articles: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Article",
+      default: [],
+    },
+  ],
 });
 
 module.exports = mongoose.model("Student", Student);
